@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GENERRIC SLH ANALYZE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy-900:#0b1f3a; --navy-800:#12305a; --navy-700:#1b4275;
+  --accent:#38bdf8; --accent-2:#22c55e; --danger:#ef4444;
+  --line:rgba(255,255,255,.14); --muted:#93a7c4;
+  --card:rgba(255,255,255,.06);
+  --radius:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'Prompt',system-ui,sans-serif;
+  background:var(--navy-900);
+  color:#fff;
+  overflow-x:hidden;
+}
+
+/* ---------- LAYOUT ---------- */
+.shell{display:grid;grid-template-columns:1.15fr .85fr;min-height:100vh}
+
+/* ---------- LEFT : HERO ---------- */
+.hero{
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:space-between;
+  padding:48px 56px;
+  background:
+    radial-gradient(1200px 600px at 15% 10%, rgba(56,189,248,.18), transparent 60%),
+    radial-gradient(900px 500px at 85% 90%, rgba(34,197,94,.14), transparent 60%),
+    linear-gradient(145deg,#081a31 0%,#0e2betc 40%,#12305a 100%);
+  background-color:#0a1e39;
+}
+.hero-bg{position:absolute;inset:0;width:100%;height:100%;opacity:.5;pointer-events:none}
+.grid-lines{
+  position:absolute;inset:0;pointer-events:none;opacity:.35;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(circle at 30% 40%,#000 25%,transparent 80%);
+  -webkit-mask-image:radial-gradient(circle at 30% 40%,#000 25%,transparent 80%);
+}
+.hero-top{position:relative;z-index:2;display:flex;align-items:center;gap:14px}
+.logo{
+  width:46px;height:46px;border-radius:13px;display:grid;place-items:center;
+  background:linear-gradient(135deg,#38bdf8,#2563eb);
+  font-weight:700;font-size:21px;box-shadow:0 8px 24px rgba(56,189,248,.35)
+}
+.brand{font-weight:600;letter-spacing:.06em;font-size:15px}
+.brand small{display:block;font-weight:300;font-size:11.5px;color:var(--muted);letter-spacing:.02em}
+
+.hero-mid{position:relative;z-index:2;max-width:620px}
+.tag{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:7px 15px;border:1px solid var(--line);border-radius:999px;
+  font-size:12px;font-weight:300;color:#cfe0f5;background:rgba(255,255,255,.05);
+  margin-bottom:26px;backdrop-filter:blur(6px)
+}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--accent-2);box-shadow:0 0 0 4px rgba(34,197,94,.18)}
+h1{font-size:clamp(30px,3.2vw,46px);font-weight:600;line-height:1.24;letter-spacing:-.01em}
+h1 span{
+  background:linear-gradient(100deg,#7dd3fc,#38bdf8 45%,#22c55e);
+  -webkit-background-clip:text;background-clip:text;color:transparent
+}
+.sub{margin-top:18px;font-weight:300;font-size:15.5px;line-height:1.85;color:#b9cbe4;max-width:540px}
+
+.stats{position:relative;z-index:2;display:flex;gap:14px;flex-wrap:wrap}
+.stat{
+  flex:1 1 160px;padding:16px 18px;border:1px solid var(--line);border-radius:14px;
+  background:var(--card);backdrop-filter:blur(10px)
+}
+.stat b{display:block;font-size:20px;font-weight:600;letter-spacing:.01em}
+.stat small{font-size:11.5px;font-weight:300;color:var(--muted)}
+
+/* ---------- RIGHT : LOGIN ---------- */
+.panel{
+  display:flex;align-items:center;justify-content:center;padding:40px 44px;
+  background:#f6f8fb;color:#0f2murky;
+  color:#102a43;
+  box-shadow:-30px 0 80px rgba(0,0,0,.35);
+}
+.login{width:100%;max-width:380px}
+.login h2{font-size:25px;font-weight:600;color:#0b1f3a}
+.login p.lead{margin-top:7px;font-size:13.5px;font-weight:300;color:#5b7189;line-height:1.7}
+.form{margin-top:30px}
+.field{margin-bottom:17px}
+label{display:block;font-size:12.5px;font-weight:500;color:#34495e;margin-bottom:7px}
+.input-wrap{position:relative}
+input[type=text],input[type=password]{
+  width:100%;padding:13px 44px 13px 42px;border:1.5px solid #dbe3ed;border-radius:12px;
+  font-family:'Prompt';font-size:14px;font-weight:300;background:#fff;color:#102a43;
+  transition:.18s
+}
+input:focus{outline:none;border-color:#2563eb;box-shadow:0 0 0 4px rgba(37,99,235,.12)}
+.ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);opacity:.45;pointer-events:none}
+.toggle{
+  position:absolute;right:10px;top:50%;transform:translateY(-50%);
+  background:none;border:none;cursor:pointer;padding:6px;opacity:.5;border-radius:8px
+}
+.toggle:hover{opacity:.9;background:#eef2f7}
+.row{display:flex;align-items:center;justify-content:space-between;margin:4px 0 22px}
+.check{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:300;color:#5b7189;cursor:pointer}
+.check input{accent-color:#2563eb;width:15px;height:15px}
+.help{font-size:12.5px;font-weight:300;color:#2563eb;text-decoration:none}
+.help:hover{text-decoration:underline}
+button.submit{
+  width:100%;padding:14px;border:none;border-radius:12px;cursor:pointer;
+  font-family:'Prompt';font-size:15px;font-weight:500;color:#fff;
+  background:linear-gradient(135deg,#1b4275,#2563eb);
+  box-shadow:0 10px 24px rgba(37,99,235,.28);transition:.18s;
+  display:flex;align-items:center;justify-content:center;gap:10px
+}
+button.submit:hover{transform:translateY(-1px);box-shadow:0 14px 30px rgba(37,99,235,.36)}
+button.submit:disabled{opacity:.7;cursor:not-allowed;transform:none}
+.spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+.alert{
+  display:none;align-items:center;gap:9px;margin-bottom:16px;padding:11px 14px;border-radius:11px;
+  background:#fee2e2;border:1px solid #fecaca;color:#b91c1c;font-size:12.5px;font-weight:300
+}
+.alert.show{display:flex}
+.shake{animation:shake .38s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.foot{margin-top:28px;padding-top:18px;border-top:1px solid #e5ebf2;font-size:11.5px;font-weight:300;color:#8296ad;line-height:1.75;text-align:center}
+
+/* ---------- SUCCESS SCREEN ---------- */
+.done{
+  position:fixed;inset:0;z-index:99;display:none;place-items:center;text-align:center;
+  background:linear-gradient(145deg,#081a31,#12305a);padding:30px
+}
+.done.show{display:grid}
+.done .ok{
+  width:72px;height:72px;border-radius:50%;margin:0 auto 22px;display:grid;place-items:center;
+  background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.45)
+}
+.done h3{font-weight:600;font-size:22px;margin-bottom:10px}
+.done p{font-weight:300;font-size:14px;color:#b9cbe4;line-height:1.8;max-width:430px;margin:0 auto}
+.done a{
+  display:inline-block;margin-top:22px;padding:11px 26px;border-radius:11px;text-decoration:none;
+  font-size:14px;font-weight:500;color:#fff;background:linear-gradient(135deg,#1b4275,#2563eb)
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:980px){
+  .shell{grid-template-columns:1fr}
+  .hero{padding:34px 28px 44px;min-height:auto}
+  .hero-mid{margin:30px 0}
+  .panel{padding:38px 24px 48px;box-shadow:none}
+}
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- ============ HERO / COVER ============ -->
+  <section class="hero">
+    <!-- ภาพพื้นหลัง: โรงฆ่าสัตว์ + กราฟการเงิน + สัญลักษณ์บาท -->
+    <svg class="hero-bg" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+      <defs>
+        <linearGradient id="gBuild" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#1e4b80" stop-opacity=".95"/>
+          <stop offset="100%" stop-color="#0a1e39" stop-opacity=".2"/>
+        </linearGradient>
+        <linearGradient id="gLine" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#22c55e"/><stop offset="100%" stop-color="#7dd3fc"/>
+        </linearGradient>
+        <linearGradient id="gFill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#22c55e" stop-opacity=".28"/>
+          <stop offset="100%" stop-color="#22c55e" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+
+      <!-- สัญลักษณ์ ฿ ขนาดใหญ่ (watermark) -->
+      <text x="780" y="330" font-family="Prompt" font-size="280" font-weight="700"
+            fill="#ffffff" opacity=".05" text-anchor="middle">฿</text>
+
+      <!-- กราฟกระแสเงินสดสะสม -->
+      <path d="M40 470 L160 440 L280 455 L400 395 L520 410 L640 330 L760 300 L900 215"
+            fill="none" stroke="url(#gLine)" stroke-width="3.5" stroke-linecap="round" opacity=".9"/>
+      <path d="M40 470 L160 440 L280 455 L400 395 L520 410 L640 330 L760 300 L900 215 L900 560 L40 560 Z"
+            fill="url(#gFill)"/>
+      <g fill="#7dd3fc">
+        <circle cx="280" cy="455" r="4.5"/><circle cx="520" cy="410" r="4.5"/><circle cx="760" cy="300" r="4.5"/>
+      </g>
+
+      <!-- อาคารโรงฆ่าสัตว์ (โรงงานหลังคาจั่ว + ปล่อง + รั้ว) -->
+      <g fill="url(#gBuild)" opacity=".85">
+        <!-- ปล่อง -->
+        <rect x="120" y="360" width="26" height="200" rx="4"/>
+        <rect x="112" y="350" width="42" height="14" rx="4"/>
+        <!-- อาคารหลัก -->
+        <path d="M180 560 V470 L250 425 L320 470 V560 Z"/>
+        <path d="M320 560 V470 L390 425 L460 470 V560 Z"/>
+        <path d="M460 560 V470 L530 425 L600 470 V560 Z"/>
+        <!-- อาคารประกอบ -->
+        <rect x="620" y="490" width="150" height="70" rx="5"/>
+        <rect x="790" y="505" width="110" height="55" rx="5"/>
+      </g>
+      <!-- หน้าต่าง/ประตู -->
+      <g fill="#7dd3fc" opacity=".35">
+        <rect x="205" y="500" width="22" height="22" rx="3"/><rect x="255" y="500" width="22" height="22" rx="3"/>
+        <rect x="345" y="500" width="22" height="22" rx="3"/><rect x="395" y="500" width="22" height="22" rx="3"/>
+        <rect x="485" y="500" width="22" height="22" rx="3"/><rect x="535" y="500" width="22" height="22" rx="3"/>
+        <rect x="650" y="515" width="34" height="45" rx="3"/><rect x="706" y="515" width="34" height="45" rx="3"/>
+      </g>
+      <!-- พื้น -->
+      <rect x="0" y="558" width="1000" height="2" fill="#7dd3fc" opacity=".25"/>
+    </svg>
+
+    <div class="grid-lines"></div>
+
+    <div class="hero-top">
+      <div class="logo">฿</div>
+      <div class="brand">GENERIC SLH ANALYZE
+        <small>Financial Feasibility Study Platform</small>
+      </div>
+    </div>
+
+    <div class="hero-mid">
+      <div class="tag"><span class="dot"></span> อ้างอิงระเบียบกระทรวงมหาดไทย ว่าด้วยการหาประโยชน์ในทรัพย์สินของ อปท. พ.ศ. 2543</div>
+      <h3>ระบบวิเคราะห์ราคากลาง (ค่าเช่ารายปี)<span>&nbsp;และแบบจำลองทางการเงิน</span><br>โครงการประมูลเช่าโรงฆ่าสัตว์</h3>
+      <p class="sub">เครื่องมือคำนวณราคากลาง (ค่าเช่า) 2 mode <br><span>&nbsp;&nbsp;&nbsp;&nbsp;<u>mode 1</u>: มีการลงทุนก่อนการประมูล (Invesment cost > 0)
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;เลือกกำหนดระยะเวลาที่ต้องการให้เป็นจุดคุ้มทุน (์NPV=0)
+      </span><br><span>&nbsp;&nbsp;&nbsp;&nbsp;<u>Mode 2</u>: ไม่มีการลงทุนเพิ่มก่อนการประมูล (Invesment cost = 0)</span>
+      <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;คำนวณจากส่วนแบ่งกำไรหลังหักภาษี (์%)
+      <br>&nbsp;&nbsp;&nbsp;&nbsp;- มีตัวเลือกให้นำค่าเสื่อมราคา มาร่วมคำนวณได้
+      <br>&nbsp;&nbsp;&nbsp;&nbsp;- วัดความคุ้มค่าและผลตอบแทนของเทศบาล ด้วย IRR
+      <br>&nbsp;&nbsp;&nbsp;&nbsp;- วิเคราะห์ความเสี่ยง Net Profit ของเอกชน ด้วย SA
+      <br>&nbsp;&nbsp;&nbsp;&nbsp;- Export to .csv, .pdf
+      <br>&nbsp;&nbsp;&nbsp;&nbsp;- ใช้วิเคราะห์เพื่อประกอบการพิจารณาให้เอกชนเช่าทรัพย์สินของ อปท.</p>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><b>NPV / IRR</b><small>วิเคราะห์ความเป็นไปได้ทางการเงิน</small></div>
+      <div class="stat"><b>Sensitivity</b><small>จำลองกรณีปริมาณสัตว์ลดลง</small></div>
+      <div class="stat"><b>Export</b><small>ออกรายงาน CSV / PDF</small></div>
+    </div>
+  </section>
+
+  <!-- ============ LOGIN PANEL ============ -->
+  <section class="panel">
+    <div class="login">
+      <h2>ยินดีต้อนรับ</h2>
+      <p class="lead">กรุณาระบุชื่อผู้ใช้ (Username) และรหัสผ่าน (Password) <br>เพื่อเข้าใช้งานระบบ</p>
+
+      <div class="alert" id="alert">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span id="alertMsg">ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง</span>
+      </div>
+
+      <form class="form" id="loginForm" autocomplete="off" novalidate>
+        <div class="field">
+          <label for="username">ชื่อผู้ใช้ (Username)</label>
+          <div class="input-wrap">
+            <svg class="ico" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#102a43" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <input type="text" id="username" placeholder="กรอกชื่อผู้ใช้" autocomplete="username">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="password">รหัสผ่าน (Password)</label>
+          <div class="input-wrap">
+            <svg class="ico" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#102a43" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <input type="password" id="password" placeholder="กรอกรหัสผ่าน" autocomplete="current-password">
+            <button type="button" class="toggle" id="togglePw" title="แสดง/ซ่อนรหัสผ่าน">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#102a43" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="row">
+          <label class="check"><input type="checkbox" id="remember"> จดจำชื่อผู้ใช้</label>
+          <a class="help" href="#" onclick="alert('กรุณาติดต่อผู้ดูแลระบบ');return false;">ลืมรหัสผ่าน?</a>
+        </div>
+
+        <button type="submit" class="submit" id="btn">
+          <span class="spinner" id="spin"></span>
+          <span id="btnTxt">เข้าสู่ระบบ</span>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </form>
+
+      <div class="foot">
+        Developer · Prasert Polla, Sanitation Technical Officer<br>
+        &copy; <span id="yr"></span> GENERC SLH ANALYZE | Financial Feasibility Study
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ SUCCESS / CLOSE SCREEN ============ -->
+<div class="done" id="done">
+  <div>
+    <div class="ok">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>
+    </div>
+    <h3>เข้าสู่ระบบสำเร็จ</h3>
+    <p>ระบบได้เปิดหน้าโปรแกรมในแท็บใหม่เรียบร้อยแล้ว<br>หากเบราว์เซอร์ไม่อนุญาตให้ปิดหน้านี้อัตโนมัติ กรุณาปิดแท็บนี้ด้วยตนเอง</p>
+    <a href="#" id="manualLink" target="_blank" rel="noopener">เปิดโปรแกรมอีกครั้ง</a>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   ⚙️ ตั้งค่าที่นี่ นำ URL ของ website จริงมาวางตรงนี้
+   ========================================================= */
+const APP_URL = "";                               // << ใส่ URL ของ web app
+const AUTH    = { user: "prasert", pass: "slhoc" };
+/* ========================================================= */
+
+const $ = id => document.getElementById(id);
+$('yr').textContent = new Date().getFullYear();
+
+/* จดจำชื่อผู้ใช้ */
+const saved = localStorage.getItem('slh_user');
+if (saved) { $('username').value = saved; $('remember').checked = true; }
+
+/* แสดง/ซ่อนรหัสผ่าน */
+$('togglePw').addEventListener('click', () => {
+  const p = $('password');
+  p.type = p.type === 'password' ? 'text' : 'password';
+  p.focus();
+});
+
+/* ซ่อน error เมื่อพิมพ์ใหม่ */
+['username','password'].forEach(id =>
+  $(id).addEventListener('input', () => $('alert').classList.remove('show')));
+
+function showError(msg){
+  $('alertMsg').textContent = msg;
+  $('alert').classList.add('show');
+  const box = document.querySelector('.login');
+  box.classList.remove('shake'); void box.offsetWidth; box.classList.add('shake');
+}
+
+$('loginForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const u = $('username').value.trim();
+  const p = $('password').value;
+
+  if (!u || !p) { showError('กรุณากรอกชื่อผู้ใช้และรหัสผ่านให้ครบถ้วน'); return; }
+  if (u.toLowerCase() !== AUTH.user || p !== AUTH.pass) {
+    showError('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง'); return;
+  }
+
+  /* สถานะกำลังโหลด */
+  $('btn').disabled = true; $('spin').style.display = 'block'; $('btnTxt').textContent = 'กำลังเข้าสู่ระบบ...';
+  $('remember').checked ? localStorage.setItem('slh_user', u) : localStorage.removeItem('slh_user');
+
+  setTimeout(() => {
+    if (!APP_URL) {
+      $('btn').disabled = false; $('spin').style.display='none'; $('btnTxt').textContent='เข้าสู่ระบบ';
+      showError('ยังไม่ได้กำหนด URL ปลายทาง (APP_URL) ในไฟล์ HTML');
+      return;
+    }
+    const win = window.open(APP_URL, '_blank', 'noopener');
+    $('manualLink').href = APP_URL;
+    $('done').classList.add('show');
+
+    /* พยายามปิดหน้า login (ได้ผลเมื่อหน้านี้ถูกเปิดด้วยสคริปต์) */
+    setTimeout(() => {
+      window.open('', '_self');   // ช่วยให้ close() ทำงานในบางเบราว์เซอร์
+      window.close();
+      /* ถ้าปิดไม่ได้ ผู้ใช้จะเห็นหน้ายืนยันด้านบนแทน */
+    }, 600);
+
+    if (!win) showError('เบราว์เซอร์บล็อกป๊อปอัป กรุณาอนุญาต popup สำหรับเว็บนี้');
+  }, 700);
+});
+</script>
+</body>
+</html>
